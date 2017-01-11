@@ -9,10 +9,39 @@ body,html {
   font-family: sans-serif;
 }
 
+header {
+  display: flex;
+  flex: 1;
+  min-height: 40vh;
+  align-items: center;
+  justify-content: center;
+}
+
+.instructions {
+  border: .4rem solid black;
+  border-radius: .5rem;
+  margin: 1rem;
+  font-size: 1.5rem;
+  padding: 1rem .5rem;
+  transition: all .07s ease;
+  width: 40rem;
+  text-align: center;
+  color: white;
+  background: rgba(0,0,0,0.4);
+  text-shadow: 0 0 .5rem black;
+}
+
+p {
+  font-size: 1.2rem;
+  text-transform: uppercase;
+  letter-spacing: .1rem;
+  color: #ffc600;
+}
+
 .loops {
   display: flex;
   flex: 1;
-  min-height: 50vh;
+  min-height: 40vh;
   align-items: center;
   justify-content: center;
 }
@@ -20,12 +49,13 @@ body,html {
 .keys {
   display: flex;
   flex: 1;
-  min-height: 50vh;
+  min-height: 40vh;
   align-items: center;
   justify-content: center;
 }
 
-.key {
+.key,
+.loop {
   border: .4rem solid black;
   border-radius: .5rem;
   margin: 1rem;

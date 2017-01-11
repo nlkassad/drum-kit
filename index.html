@@ -7,18 +7,29 @@
 </head>
 <body>
 
+  <header>
+    <div class="instructions">
+      <h2>
+        Instructions
+      </h2>
+      <p>
+        Press the key for the sound that you want to trigger.
+        Press any unassigned key to stop all sounds.
+      </p>
+    </div>
+  </header>
   <div class="loops">
-    <div data-key="81" class="key">
-      <kbd>A</kbd>
-      <span class="sound">clap</span>
+    <div data-key="81" class="key loop">
+      <kbd>Q</kbd>
+      <span class="sound">clap loop</span>
     </div>
-    <div data-key="87" class="key">
-      <kbd>A</kbd>
-      <span class="sound">clap</span>
+    <div data-key="87" class="key loop">
+      <kbd>W</kbd>
+      <span class="sound">boom loop</span>
     </div>
-    <div data-key="69" class="key">
-      <kbd>A</kbd>
-      <span class="sound">clap</span>
+    <div data-key="69" class="key loop">
+      <kbd>E</kbd>
+      <span class="sound">ride loop</span>
     </div>
   </div>
   <div class="keys">
@@ -70,23 +81,47 @@
   <audio data-key="75" src="sounds/tom.wav"></audio>
   <audio data-key="76" src="sounds/tink.wav"></audio>
 
+  <audio loop="true" data-key="81" src="sounds/clap.wav"></audio>
+  <audio loop="true" data-key="87" src="sounds/snare.wav"></audio>
+  <audio loop="true" data-key="69" src="sounds/tink.wav"></audio>
+
 <script>
+  function pauseSound() {
+    var sounds = document.getElementsByTagName('audio');
+    for(i=0; i<sounds.length; i++) sounds[i].pause();
+  }
+
   function playSound(e) {
     const audio = document.querySelector(`audio[data-key="${e.keyCode}"]`);
     const key = document.querySelector(`.key[data-key="${e.keyCode}"]`);
-    if(!audio) return; // halt function
+    if(!audio) {
+      pauseSound();
+      return;
+    }
     audio.currentTime = 0; // forces sound file to beginning on trigger
     audio.play();
     key.classList.add('playing');
-  };
+    console.log(key.classList);
+  }
 
   function removeTransition(e) {
     if (e.propertyName !== 'transform') return;
     this.classList.remove('playing');
-  };
+  }
+
+  function stopLoop(e) {
+    const audio = document.querySelector(`audio[data-key="${e.keyCode}"]`);
+    const loop = document.querySelector(`.loop[data-key="${e.keyCode}"]`);
+    audio.pause();
+    this.classList.remove('playing');
+  }
 
   const keys = document.querySelectorAll('.key');
+  // keys.forEach(key => key.addEventListener('keydown', playSound));
   keys.forEach(key => key.addEventListener('transitionend', removeTransition));
+
+  const loops = document.querySelectorAll('.loops');
+  loops.forEach(loop => loop.addEventListener('keydown', stopLoop));
 
   window.addEventListener('keydown', playSound);
 
